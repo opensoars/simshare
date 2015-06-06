@@ -6,7 +6,7 @@ var app = {};
 
 /**
  * @namespace
- * @desc Application configuration
+ * @desc App configuration
  */
 app.config = {
   http_port: 3333
