@@ -1,0 +1,30 @@
+{
+  "name": "Simshare",
+
+  "description": "Simple text sharing",
+
+  "version": "0.0.1",
+
+  "scripts": {
+    
+  },
+
+  "engines" : {
+    "node" : ">=0.8"
+  },
+
+  "dependencies": {
+    "express": "*"
+  },
+
+  "devDependencies": {
+    
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/opensoars/simshare"
+  },
+
+  "readmeFilename": "README.md"
+}
