@@ -14,15 +14,16 @@
   },
 
   "dependencies": {
-    "express": "*",
-    "ezlog": "*",
-    "ws": "*"
+    "express": "4.12.4",
+    "ezlog": "0.0.15",
+    "ws": "0.7.2"
   },
 
   "devDependencies": {
-    "mocha": "*",
-    "istanbul": "*",
-    "coveralls": "*"
+    "mocha": "2.2.5",
+    "istanbul": "0.3.14",
+    "coveralls": "2.11.2",
+    "jasmine": "2.3.1"
   },
 
   "repository": {

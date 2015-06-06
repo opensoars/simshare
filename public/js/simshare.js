@@ -60,8 +60,11 @@ app.dom = {
  * @namespace
  * @desc App websockets functionality
  */
+
+
+
 app.ws = {
-  socket: new WebSocket('ws://localhost:3335'),
+  socket: new WebSocket('ws://' + location.hostname + ':3335'),
 
   helpers: {
     sendJSON: function (data){
