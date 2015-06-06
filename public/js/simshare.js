@@ -10,12 +10,30 @@ var app = {};
  */
 app.config = {};
 
-/**
- * @namespace
- * @desc App memory database
- */
-app.db = {
-  text_data: ''
+app.helpers = {
+  /**
+   * @param {string} str - String to test for an url pattern
+   * @return {bool} - Whether str is an url
+   */
+  isUrl: function (){
+    var url_pattern = /.+?\:.+?\..+?/;
+
+    return function (str){
+      return url_pattern.test(str);
+    };
+  }(),
+
+  getUrlsFromText: function (text){
+    var urls = [];
+
+    // Test whether textarea lines are an url
+    text.split( /\n/ ).forEach(function (text_line){
+      if(app.helpers.isUrl(text_line))
+        urls.push(text_line);
+    });
+
+    return urls;
+  }
 };
 
 /**
@@ -27,9 +45,15 @@ app.dom = {
     update_btn: document.getElementById('update_btn'),
     load_btn: document.getElementById('load_btn'),
     textarea: document.getElementById('input'),
-    update_notifier: document.getElementById('update_notifier')
-  }
+    update_notifier: document.getElementById('update_notifier'),
+    urls_list: document.getElementById('urls_list')
+  },
 
+  helpers: {
+    setText: function (text){
+      app.dom.els.textarea.value = text;
+    }
+  }
 };
 
 /**
@@ -39,30 +63,28 @@ app.dom = {
 app.ws = {
   socket: new WebSocket('ws://localhost:3335'),
 
-  sendJSON: function (data){
-    if(typeof data === 'object')
-      data = JSON.stringify(data);
+  helpers: {
+    sendJSON: function (data){
+      if(typeof data === 'object')
+        data = JSON.stringify(data);
 
-    app.ws.socket.send(data);
+      app.ws.socket.send(data);
+    },
+    updateTextData: function (){
+      app.ws.helpers.sendJSON({
+        text_data: app.dom.els.textarea.value
+      });
+    }
   },
-
   onMessage: function (message){
     try { data = JSON.parse(message.data); }
     catch(e) { data = message }
 
-    console.log(data);
-
     if(data.text_data)
-      app.dom.els.textarea.value = data.text_data;
+      app.dom.helpers.setText(data.text_data);
   },
-
   bindHandlers: function (){
     app.ws.socket.onmessage = app.ws.onMessage; 
-  },
-  updateTextData: function (){
-    app.ws.sendJSON({
-      text_data: app.dom.els.textarea.value
-    });
   }
 };
 
@@ -117,14 +139,12 @@ app.http = {
       if(err) alert(err);
     });
 
-    app.dbtext_data = text_data
   },
   loadTextData: function (){
     app.http.getData(function (err, res){
       if(err) alert(err);
 
       app.dom.els.textarea.value = res;
-      app.dbtext_data = res;
     });
   }
 
@@ -142,7 +162,13 @@ app.http = {
 app.dom.els.update_btn.onclick = app.http.updateTextData;
 app.dom.els.load_btn.onclick = app.http.loadTextData;
 
-app.dom.els.textarea.onkeyup = app.ws.updateTextData;
+app.dom.els.textarea.onkeyup = function (){
+  var text = app.dom.els.textarea.value;
+
+  app.ws.helpers.updateTextData(text);
+
+  //app.helpers.getUrlsFromText(text).forEach(app.dom.helpers.draw);
+};
 
 // HTTP load text
 app.http.loadTextData();
