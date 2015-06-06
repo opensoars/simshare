@@ -65,6 +65,7 @@ app.express.get('/text_data', app.libs.http_handlers.get_data);
 // Start listening for http requests
 app.express.listen(app.config.http_port);
 
-// Notify about startup
+// Startup notifications
+app.log('app.config = ' + JSON.stringify(app.config, 2, 2));
 app.log('Simshare is initialized!');
 app.log('Listening for HTTP requests on port: ' + app.config.http_port);
