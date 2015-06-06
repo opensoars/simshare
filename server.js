@@ -8,9 +8,8 @@ var app = {};
  * @namespace
  * @desc App configuration
  */
-app.config = {
-  http_port: 3333
-};
+app.config = require('./config.json');
+
 
 /**
  * @namespace
