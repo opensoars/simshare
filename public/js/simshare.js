@@ -37,23 +37,61 @@ app.http = {
   getData: function (cb){
     var req = new XMLHttpRequest();
     req.open('GET', '/text_data', true);
+
     req.onreadystatechange = function (){
-      if(this.readyState === 4){
-        app.dom.els.textarea.value = this.response;
-        app.dbtext_data = this.response;
-      }
+      if(this.readyState === 4)
+        cb(null, this.response);
     };
+
+    req.onerror = function (){
+      cb('app.http.getData error');
+    };
+
     req.send();
   },
   /**
    * @public
    * @desc Http posts text_data
    */
-  postData: function (cb){
+  postData: function (text_data, cb){
     var req = new XMLHttpRequest();
     req.open('POST', '/text_data', true);
+
+    req.onreadystatechange = function (){
+      if(this.readyState === 4)
+        cb();
+    };
+
+    req.onerror = function (){
+      cb('app.http.postData error');
+    };
+
     req.send(app.dom.els.textarea.value);
-    app.dbtext_data = app.dom.els.textarea.value;
+  }
+};
+
+/**
+ * @namespace
+ * @desc Aplication functionality
+ */
+app.functions = {
+  updateTextData: function (){
+    var text_data = app.dom.els.textarea.value;
+
+    app.http.postData(text_data, function (err){
+      if(err) alert(err);
+    });
+
+    app.dbtext_data = text_data
+  },
+
+  loadTextData: function (){
+    app.http.getData(function (err, res){
+      if(err) alert(err);
+
+      app.dom.els.textarea.value = res;
+      app.dbtext_data = res;
+    });
   }
 };
 
@@ -68,20 +106,9 @@ app.http = {
 /**
  * Bind functionality to dom events
  */
-app.dom.els.update_btn.onclick = function (){
-  /**
-   * @cb
-   */
-  app.http.postData(function (err){
+app.dom.els.update_btn.onclick = app.functions.updateTextData;
+app.dom.els.load_btn.onclick = app.functions.loadTextData;
 
-  });
-};
 
-app.dom.els.load_btn.onclick = function (){
-  /**
-   * @cb
-   */
-  app.http.getData(function (err){
 
-  });
-};
+app.functions.loadTextData();

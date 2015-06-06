@@ -30,6 +30,12 @@ app.modules = {
 };
 
 /**
+ * @namespace
+ * @desc App logger functions
+ */
+app = require('./lib/loggers')(app); 
+
+/**
  *
  * @namespace
  * @desc App library object
@@ -47,23 +53,19 @@ app.libs = {
  */
 
 
-/**
- * Initialize express
- */
+// Initialize express
 app.express = app.modules.express();
 
-/**
- * Middleware stack
- */
+// Middleware stack
 app.express.use(app.modules.express.static(__dirname + '/public'));
 
-/**
- * Setup application routes
- */
+// Setup application routes
 app.express.post('/text_data', app.libs.http_handlers.post_data);
 app.express.get('/text_data', app.libs.http_handlers.get_data);
 
-/**
- * Start listening for http requests
- */
+// Start listening for http requests
 app.express.listen(app.config.http_port);
+
+// Notify about startup
+app.log('Simshare is initialized!');
+app.log('Listening for HTTP requests on port: ' + app.config.http_port);
