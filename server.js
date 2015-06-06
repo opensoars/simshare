@@ -5,11 +5,11 @@ app.modules = {
 };
 
 
-app.server = express();
+app.server = app.modules.express();
 
 app.text_data = '';
 
-app.server.use(express.static(__dirname + '/public'));
+app.server.use(app.modules.express.static(__dirname + '/public'));
 
 app.server.post('/text_data', function (req, res){
   var body = '';
@@ -24,7 +24,7 @@ app.server.post('/text_data', function (req, res){
 });
 
 app.server.get('/text_data', function (req, res){
-  res.write(text_data);
+  res.write(app.text_data);
   res.end();
 });
 
