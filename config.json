@@ -1,4 +1,14 @@
 {
   "http_port": 3334,
-  "ws_port": 3335
+  "ws_port": 3335,
+
+  "to_log": {
+    "websockets": {
+      "message": true,
+      "connection": true,
+      "close": true
+    },
+
+    "config": true
+  }
 }

@@ -11,6 +11,9 @@ app.dirname = __dirname;
 app = require('./lib/loadAppDeps')(app);
 app = require('./lib/setupApp')(app);
 
-// Startup notifications
-app.log('app.config = ' + JSON.stringify(app.config, 2, 2));
+// Log config.json if wanted
+if(app.config.to_log.config)
+  app.log('app.config = ' + JSON.stringify(app.config, 2, 2));
+
+// Log about simshare being ready
 app.log('Simshare is initialized!');

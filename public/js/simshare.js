@@ -32,7 +32,6 @@ app.dom = {
 
 };
 
-
 /**
  * @namespace
  * @desc App websockets functionality
@@ -40,7 +39,7 @@ app.dom = {
 app.ws = {
   socket: new WebSocket('ws://localhost:3335'),
 
-  postData: function (data){
+  sendJSON: function (data){
     if(typeof data === 'object')
       data = JSON.stringify(data);
 
@@ -48,11 +47,22 @@ app.ws = {
   },
 
   onMessage: function (message){
-    console.log(message);
+    try { data = JSON.parse(message.data); }
+    catch(e) { data = message }
+
+    console.log(data);
+
+    if(data.text_data)
+      app.dom.els.textarea.value = data.text_data;
   },
 
-  bindHanlder: function (){
+  bindHandlers: function (){
     app.ws.socket.onmessage = app.ws.onMessage; 
+  },
+  updateTextData: function (){
+    app.ws.sendJSON({
+      text_data: app.dom.els.textarea.value
+    });
   }
 };
 
@@ -98,33 +108,26 @@ app.http = {
     };
 
     req.send(app.dom.els.textarea.value);
+  },
+
+  updateTextData: function (){
+    var text_data = app.dom.els.textarea.value;
+
+    app.http.postData(text_data, function (err){
+      if(err) alert(err);
+    });
+
+    app.dbtext_data = text_data
+  },
+  loadTextData: function (){
+    app.http.getData(function (err, res){
+      if(err) alert(err);
+
+      app.dom.els.textarea.value = res;
+      app.dbtext_data = res;
+    });
   }
-};
 
-/**
- * @namespace
- * @desc Aplication functionality
- */
-app.functions = {
-  http: {
-    updateTextData: function (){
-      var text_data = app.dom.els.textarea.value;
-
-      app.http.postData(text_data, function (err){
-        if(err) alert(err);
-      });
-
-      app.dbtext_data = text_data
-    },
-    loadTextData: function (){
-      app.http.getData(function (err, res){
-        if(err) alert(err);
-
-        app.dom.els.textarea.value = res;
-        app.dbtext_data = res;
-      });
-    }
-  }
 };
 
 
@@ -136,19 +139,13 @@ app.functions = {
 
 
 // Bind functionality to dom events
-app.dom.els.update_btn.onclick = app.functions.http.updateTextData;
-app.dom.els.load_btn.onclick = app.functions.http.loadTextData;
+app.dom.els.update_btn.onclick = app.http.updateTextData;
+app.dom.els.load_btn.onclick = app.http.loadTextData;
 
-app.dom.els.textarea.onkeyup = function (){
+app.dom.els.textarea.onkeyup = app.ws.updateTextData;
 
-  app.ws.postData({
-    text_data: app.dom.els.textarea.value
-  });
-
-};
+// HTTP load text
+app.http.loadTextData();
 
 // Bind websocket connection hanlder
-app.ws.bindHanlder();
-
-
-app.functions.http.loadTextData();
+app.ws.bindHandlers();
