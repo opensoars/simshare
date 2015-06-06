@@ -1,31 +1,66 @@
+/**
+ *
+ * @namespace
+ * @desc Top level app object
+ *
+ */
 var app = {};
 
-app.modules = {
-  express: require('express')
+
+/**
+ *
+ * @namespace
+ * @desc Application configuration
+ *
+ */
+app.config = {
+  http_port: 3333
 };
 
 
-app.server = app.modules.express();
+/**
+ *
+ * @namespace
+ * @desc App memory database
+ *
+ */
+app.db = {
+  text_data: ''
+};
 
-app.text_data = '';
 
-app.server.use(app.modules.express.static(__dirname + '/public'));
+/**
+ *
+ * @namespace
+ * @desc App module object
+ *
+ */
+app.modules = {
+  express: require('express'),
+  Ezlog: require('ezlog')
+};
 
-app.server.post('/text_data', function (req, res){
-  var body = '';
 
-  req.on('data', function (chunk){
-    body += chunk;
-  });
+/**
+ *
+ * @namespace
+ * @desc App library object
+ *
+ */
+app.libs = {
+  http_handlers: require('./lib/http_handlers')(app)
+};
 
-  req.on('end',  function (){
-    app.text_data = body;
-  });
-});
 
-app.server.get('/text_data', function (req, res){
-  res.write(app.text_data);
-  res.end();
-});
+// Initialize express
+app.express = app.modules.express();
 
-app.server.listen(3333);
+// Middleware stack
+app.express.use(app.modules.express.static(__dirname + '/public'));
+
+// Setup application routes
+app.express.post('/text_data', app.libs.http_handlers.post_data);
+app.express.get('/text_data', app.libs.http_handlers.get_data);
+
+// Start listening for http requests
+app.express.listen(app.config.http_port);
