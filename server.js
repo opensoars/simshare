@@ -1,19 +1,31 @@
-var express = require('express'),
-    app = express();
+var app = {};
 
-var text_data = '';
+app.modules = {
+  express: require('express')
+};
 
-app.use(express.static(__dirname + '/public'));
 
-app.post('/text_data', function (req, res){
+app.server = express();
+
+app.text_data = '';
+
+app.server.use(express.static(__dirname + '/public'));
+
+app.server.post('/text_data', function (req, res){
   var body = '';
-  req.on('data', function (chunk){ body += chunk; });
-  req.on('end',  function (){ text_data = body; });
+
+  req.on('data', function (chunk){
+    body += chunk;
+  });
+
+  req.on('end',  function (){
+    app.text_data = body;
+  });
 });
 
-app.get('/text_data', function (req, res){
+app.server.get('/text_data', function (req, res){
   res.write(text_data);
   res.end();
 });
 
-app.listen(3333);
+app.server.listen(3333);
