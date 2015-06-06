@@ -25,9 +25,16 @@ app.dom = {
   }
 };
 
-
+/**
+ * @namespace
+ * @desc App http functionality and configuration
+ */
 app.http = {
-  getData: function (){
+  /**
+   * @public
+   * @desc Http gets text_data
+   */
+  getData: function (cb){
     var req = new XMLHttpRequest();
     req.open('GET', '/text_data', true);
     req.onreadystatechange = function (){
@@ -38,7 +45,11 @@ app.http = {
     };
     req.send();
   },
-  postData: function (){
+  /**
+   * @public
+   * @desc Http posts text_data
+   */
+  postData: function (cb){
     var req = new XMLHttpRequest();
     req.open('POST', '/text_data', true);
     req.send(app.dom.els.textarea.value);
@@ -47,11 +58,30 @@ app.http = {
 };
 
 
+/**
+ *
+ * Initialize application logic
+ *
+ */
 
+
+/**
+ * Bind functionality to dom events
+ */
 app.dom.els.update_btn.onclick = function (){
-  app.http.postData();
+  /**
+   * @cb
+   */
+  app.http.postData(function (err){
+
+  });
 };
 
 app.dom.els.load_btn.onclick = function (){
-  app.http.getData();
+  /**
+   * @cb
+   */
+  app.http.getData(function (err){
+
+  });
 };
