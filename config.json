@@ -1,3 +1,4 @@
 {
-  "http_port": 3333
+  "http_port": 3334,
+  "ws_port": 3335
 }
