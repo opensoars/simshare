@@ -21,3 +21,8 @@ npm install
 ## Use
 
 `node server.js`
+
+
+## Documentation
+
+To generate documentation: `npm run doc_backend` or `npm run doc_frontend`. The documentation is served along with simshare, it's server at `/doc/jsdoc`.
