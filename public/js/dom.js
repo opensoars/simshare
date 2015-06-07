@@ -32,10 +32,10 @@ app.dom = {
     drawUrls: function (urls){
       urls = urls instanceof Array ? urls : [];
 
-      console.log(urls);
-
+      // Reset urls list
       urls_list.innerHTML = '';
 
+      // Draw each url
       urls.forEach(function (url){
         urls_list.innerHTML += "<li><a href=''>" + url + "</a></li>";
       });

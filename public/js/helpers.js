@@ -3,6 +3,7 @@
  * @desc Application helper functions
  */
 app.helpers = {
+
   /**
    * @param {string} str - String to test for an url pattern
    * @return {bool} - Whether str is an url
@@ -15,6 +16,10 @@ app.helpers = {
     };
   }(),
 
+  /**
+   * @param {string} text - Text to get urls from
+   * @return {array} urls - Extracted urls
+   */
   getUrls: function (text){
     var urls = [];
 
