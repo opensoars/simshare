@@ -1,6 +1,6 @@
 /**
+ * Application helper functions.
  * @namespace
- * @desc Application helper functions
  */
 app.helpers = {
 

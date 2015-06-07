@@ -3,6 +3,6 @@
  * @desc App config
  */
 app.config = {
-  http_port: 3334,
-  ws_port: 3335
+  http_port: 3333,
+  ws_port: 3334
 };

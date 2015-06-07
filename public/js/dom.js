@@ -1,6 +1,6 @@
 /**
- * @namespace
- * @desc App dom
+ * @namespace app.dom
+ * @desc Application dom elements, data and methods
  */
 app.dom = {
   els: {
@@ -14,31 +14,38 @@ app.dom = {
   old_textarea_value: '',
 
   /**
-   * @desc Renders all dom elements
+   * Renders all dom elements.
+   * @param {object} data - Template data
    */
   update: function (data){
     data = data || {};
     
     if(data.text_data || data.text_data === ''){
-      app.dom.helpers.setTextarea(data.text_data);
-      app.dom.helpers.drawUrls(app.helpers.getUrls(data.text_data));
+      app.dom.setTextarea(data.text_data);
+      app.dom.drawUrls(app.helpers.getUrls(data.text_data));
     }
   },
+  /**
+   * Sets app.dom.els.textarea.value.
+   * @param {string} text_data - Textarea value
+   */
+  setTextarea: function (text_data){
+    app.dom.els.textarea.value = text_data;
+  },
+  /**
+   * Draws an array urls in urls_list
+   * @param {array} urls - Urls to draw in urls_list
+   */
+  drawUrls: function (urls){
+    urls = urls instanceof Array ? urls : [];
 
-  helpers: {
-    setTextarea: function (text_data){
-      app.dom.els.textarea.value = text_data;
-    },
-    drawUrls: function (urls){
-      urls = urls instanceof Array ? urls : [];
+    // Reset urls list
+    urls_list.innerHTML = '';
 
-      // Reset urls list
-      urls_list.innerHTML = '';
-
-      // Draw each url
-      urls.forEach(function (url){
-        urls_list.innerHTML += "<li><a href=''>" + url + "</a></li>";
-      });
-    }
+    // Draw each url
+    urls.forEach(function (url){
+      urls_list.innerHTML += "<li><a href=''>" + url + "</a></li>";
+    });
   }
+  
 };

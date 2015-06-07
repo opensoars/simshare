@@ -6,7 +6,8 @@
   "version": "0.0.1",
 
   "scripts": {
-    "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./tests/mocha/*.js\""
+    "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./tests/mocha/*.js\"",
+    "get_doc": "./"
   },
 
   "engines" : {
@@ -17,7 +18,8 @@
     "express": "4.12.4",
     "ezlog": "0.0.15",
     "ws": "0.7.2",
-    "compression": "1.4.4"
+    "compression": "1.4.4",
+    "jsdoc": "*"
   },
 
   "devDependencies": {

@@ -1,0 +1,6 @@
+{
+  "source": {
+    "include": ["./../../lib", "./../../index.js", "./../../public"]
+  }
+}
+
