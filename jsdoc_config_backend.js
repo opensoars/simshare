@@ -1,6 +1,0 @@
-{
-  "source": {
-    "include": ["./../public"]
-  }
-}
-
