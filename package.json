@@ -6,7 +6,7 @@
   "version": "0.0.1",
 
   "scripts": {
-    "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./test/mocha/*.js\""
+    "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./tests/mocha/*.js\""
   },
 
   "engines" : {
