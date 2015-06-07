@@ -8,7 +8,8 @@
   "scripts": {
     "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./tests/mocha/*.js\"",
     "doc_backend": "node node_modules/jsdoc/jsdoc.js -c ./doc/jsdoc_config_backend.js --readme readme.MD",
-    "doc_frontend": "node node_modules/jsdoc/jsdoc.js -c ./doc/jsdoc_config_frontend.js --readme readme.MD"
+    "doc_frontend": "node node_modules/jsdoc/jsdoc.js -c ./doc/jsdoc_config_frontend.js --readme readme.MD",
+    "doc": "npm run doc_backend && npm run doc_frontend"
   },
 
   "engines" : {

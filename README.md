@@ -29,4 +29,4 @@ Incoming
 
 ## Documentation
 
-To generate documentation run either `npm run doc_backend` or `npm run doc_frontend`. The documentation is served along with simshare, it's server at `/doc/jsdoc`.
+To generate documentation run `npm run doc`, `npm run doc_backend` or `npm run doc_frontend`.  The documentation is served along with simshare, it's server at `/doc/jsdoc`.

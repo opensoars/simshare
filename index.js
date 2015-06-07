@@ -7,7 +7,7 @@ var app = {};
 app.require = require;
 app.dirname = __dirname;
 
-// Load application dependencies and set the app up for use
+// Load app dependencies and set the app up for use
 app = require('./lib/loadAppDeps')(app);
 app = require('./lib/setupApp')(app);
 
