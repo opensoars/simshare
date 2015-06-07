@@ -8,7 +8,10 @@ var app = {};
  * @namespace
  * @desc App config
  */
-app.config = {};
+app.config = {
+  http_port: 3334,
+  ws_port: 3335
+};
 
 app.helpers = {
   /**
@@ -23,7 +26,7 @@ app.helpers = {
     };
   }(),
 
-  getUrlsFromText: function (text){
+  getUrls: function (text){
     var urls = [];
 
     // Test whether textarea lines are an url
@@ -49,9 +52,32 @@ app.dom = {
     urls_list: document.getElementById('urls_list')
   },
 
+  old_textarea_value: '',
+
+  /**
+   * @desc Renders all dom elements
+   */
+  update: function (data){
+    data = data || {};
+
+    if(data.text_data){
+      app.dom.helpers.setTextarea(data.text_data);
+      app.dom.helpers.drawUrls(app.helpers.getUrls(data.text_data));
+    }
+  },
+
   helpers: {
-    setText: function (text){
-      app.dom.els.textarea.value = text;
+    setTextarea: function (text_data){
+      app.dom.els.textarea.value = text_data;
+    },
+    drawUrls: function (urls){
+      urls = urls instanceof Array ? urls : [];
+
+      urls_list.innerHTML = '';
+
+      urls.forEach(function (url){
+        urls_list.innerHTML += "<li><a href=''>" + url + "</a></li>";
+      });
     }
   }
 };
@@ -60,9 +86,6 @@ app.dom = {
  * @namespace
  * @desc App websockets functionality
  */
-
-
-
 app.ws = {
   socket: new WebSocket('ws://' + location.hostname + ':3335'),
 
@@ -84,7 +107,10 @@ app.ws = {
     catch(e) { data = message }
 
     if(data.text_data)
-      app.dom.helpers.setText(data.text_data);
+      app.dom.update({
+        text_data: data.text_data
+      });
+    
   },
   bindHandlers: function (){
     app.ws.socket.onmessage = app.ws.onMessage; 
@@ -166,14 +192,24 @@ app.dom.els.update_btn.onclick = app.http.updateTextData;
 app.dom.els.load_btn.onclick = app.http.loadTextData;
 
 app.dom.els.textarea.onkeyup = function (){
-  var text = app.dom.els.textarea.value;
+  var text_data = app.dom.els.textarea.value
 
-  app.ws.helpers.updateTextData(text);
+  // If the text_data didnt change, return
+  if(app.dom.old_textarea_value === text_data)
+    return;
+  
+  // Update old and new textarea value;
+  app.dom.old_textarea_value = text_data;
 
-  //app.helpers.getUrlsFromText(text).forEach(app.dom.helpers.draw);
+  // Send new text_data data to the server
+  app.ws.helpers.updateTextData(text_data);
+  
+  app.dom.update({
+    text_data: text_data
+  });
 };
 
-// HTTP load text
+// HTTP load text_data
 app.http.loadTextData();
 
 // Bind websocket connection hanlder
