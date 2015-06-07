@@ -59,8 +59,8 @@ app.dom = {
    */
   update: function (data){
     data = data || {};
-
-    if(data.text_data){
+    
+    if(data.text_data || data.text_data === ''){
       app.dom.helpers.setTextarea(data.text_data);
       app.dom.helpers.drawUrls(app.helpers.getUrls(data.text_data));
     }
@@ -72,6 +72,8 @@ app.dom = {
     },
     drawUrls: function (urls){
       urls = urls instanceof Array ? urls : [];
+
+      console.log(urls);
 
       urls_list.innerHTML = '';
 
@@ -106,7 +108,7 @@ app.ws = {
     try { data = JSON.parse(message.data); }
     catch(e) { data = message }
 
-    if(data.text_data)
+    if(data.text_data || data.text_data === '')
       app.dom.update({
         text_data: data.text_data
       });
@@ -191,19 +193,21 @@ app.http = {
 app.dom.els.update_btn.onclick = app.http.updateTextData;
 app.dom.els.load_btn.onclick = app.http.loadTextData;
 
-app.dom.els.textarea.onkeyup = function (){
+app.dom.els.textarea.onkeyup = function (evt){
   var text_data = app.dom.els.textarea.value
 
   // If the text_data didnt change, return
   if(app.dom.old_textarea_value === text_data)
     return;
   
+
   // Update old and new textarea value;
   app.dom.old_textarea_value = text_data;
 
   // Send new text_data data to the server
   app.ws.helpers.updateTextData(text_data);
-  
+
+  console.log('u1');
   app.dom.update({
     text_data: text_data
   });
