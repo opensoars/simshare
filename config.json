@@ -10,5 +10,7 @@
     },
 
     "config": true
-  }
+  },
+
+  "serve_doc": true
 }
