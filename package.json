@@ -7,7 +7,8 @@
 
   "scripts": {
     "local_test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha \"./tests/mocha/*.js\"",
-    "get_doc": "./"
+    "doc_backend": "node node_modules/jsdoc/jsdoc.js -c ./doc/jsdoc_config_backend.js --readme readme.MD",
+    "doc_frontend": "node node_modules/jsdoc/jsdoc.js -c ./doc/jsdoc_config_frontend.js --readme readme.MD"
   },
 
   "engines" : {
@@ -19,7 +20,7 @@
     "ezlog": "0.0.15",
     "ws": "0.7.2",
     "compression": "1.4.4",
-    "jsdoc": "*"
+    "jsdoc": "3.3.0"
   },
 
   "devDependencies": {

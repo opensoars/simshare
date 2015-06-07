@@ -1,4 +1,4 @@
 node_modules/
 coverage/
-doc/out/
-public/doc/out
+/doc/jsdoc/frontend
+/doc/jsdoc/backend
