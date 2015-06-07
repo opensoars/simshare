@@ -15,11 +15,12 @@ app.ws = {
 
   /**
    * Websocket helpers
+   * @memberof ws
    */
   helpers: {
     /**
      * Sends JSON through the websocket connection, stringifies if needed.
-     * @method
+     * @memberof ws
      */
     sendJSON: function (data){
       if(typeof data === 'object')
@@ -38,7 +39,7 @@ app.ws = {
   },
   /**
    * Gets called when a websocket message is received
-   * @method
+   * @param {object|string} message - Websocket message
    */
   onMessage: function (message){
     try { data = JSON.parse(message.data); }

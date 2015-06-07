@@ -3,6 +3,10 @@
  * @desc Application dom elements, data and methods
  */
 app.dom = {
+  /**
+   * DOM elements collection
+   * @type {object}
+   */
   els: {
     update_btn: document.getElementById('update_btn'),
     load_btn: document.getElementById('load_btn'),
@@ -11,6 +15,10 @@ app.dom = {
     urls_list: document.getElementById('urls_list')
   },
 
+  /**
+   * Used for comparison to check whether a keyup means different text_data
+   * @type {string}
+   */
   old_textarea_value: '',
 
   /**
