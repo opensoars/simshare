@@ -1,6 +1,6 @@
 {
-  "http_port": 80,
-  "ws_port": 80,
+  "http_port": 3333,
+  "ws_port": 3334,
 
   "to_log": {
     "websockets": {
