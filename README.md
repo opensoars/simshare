@@ -1,6 +1,10 @@
 # Simshare
 
+[![Inline docs](http://inch-ci.org/github/opensoars/simshare.svg?branch=master)](http://inch-ci.org/github/opensoars/simshare)
+
 Really simple text sharing application.
+
+---
 
 ## Features
 
