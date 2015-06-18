@@ -24,4 +24,4 @@ app.dom.els.textarea.onkeyup = function (evt){
 app.http.loadTextData();
 
 // Bind websocket connection hanlder
-app.ws.bindHandlers();
+app.ws.init();

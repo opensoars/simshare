@@ -65,5 +65,9 @@ app.ws = {
   bindHandlers: function (){
     app.ws.socket.onmessage = app.ws.onMessage; 
     app.ws.socket.onclose = app.ws.onClose;
+  },
+
+  init: function (){
+    app.ws.bindHandlers();
   }
 };

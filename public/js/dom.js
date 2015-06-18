@@ -52,7 +52,8 @@ app.dom = {
 
     // Draw each url
     urls.forEach(function (url){
-      urls_list.innerHTML += "<li><a href=''>" + url + "</a></li>";
+      urls_list.innerHTML += "<li><a target='_blank' href='"
+        + url + "'>" + url + "</a></li>";
     });
   }
   
