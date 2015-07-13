@@ -1,6 +1,8 @@
 # Simshare
 
 [![Inline docs](http://inch-ci.org/github/opensoars/simshare.svg?branch=master)](http://inch-ci.org/github/opensoars/simshare)
+[![Code Climate](https://codeclimate.com/github/opensoars/simshare/badges/gpa.svg)](https://codeclimate.com/github/opensoars/simshare)
+
 
 Really simple text sharing application.
 
